@@ -1,66 +1,40 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Tca-Tik: Gestión de Productos, Almacenes y Categorías con Laravel
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+¡Bienvenido/a a Tca-Tik! 😀 Este proyecto es un sistema de gestión desarrollado en Laravel que te permite administrar productos, almacenes y categorías mediante un sistema CRUD.
 
-## About Laravel
+## Requerimientos del Ejercicio
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Para este ejercicio, se debe crear un CRUD desde cero para gestionar productos, almacenes y categorías, teniendo en cuenta las siguientes consideraciones:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Un producto tiene una categoría y puede estar en varios almacenes.
+- Los campos de un producto son: nombre, precio, observaciones, categoría a la que pertenece y almacenes en los que se encuentra.
+- Los almacenes y categorías deben tener una tabla en la base de datos y estar relacionadas con la tabla de productos.
+- Crear una página para ver todos los productos en una tabla con opciones de editar y borrar.
+- Crear una página con un formulario para crear y editar productos.
+- Crear seeders o factories para llenar la base de datos con datos de prueba.
+- Emplear validaciones en el formulario usando jQuery para evitar enviar campos vacíos y asegurar que el nombre tenga al menos 3 caracteres.
+- El diseño es libre, utilizando Bootstrap o cualquier hoja de estilos deseada.
+- Las relaciones entre tablas deben nombrarse productos_has_X.
+- El entorno de trabajo es Laragon y MySQL con el visualizador de HeidiSQL.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Consideraciones Adicionales
 
-## Learning Laravel
+- Se debe garantizar la seguridad, incluyendo validaciones en el store al guardar.
+- El código debe mantenerse limpio y organizado.
+- Es importante tener un control adecuado de errores.
+- Opcionalmente, se puede trabajar en los estilos del frontend si el tiempo lo permite.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Instrucciones para Ejecutar el Proyecto
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+1. Clonar este repositorio en tu entorno de desarrollo local.
+2. Configurar el archivo `.env` con los datos de conexión a la base de datos.
+3. Ejecutar las migraciones para crear las tablas en la base de datos: `php artisan migrate`.
+4. Ejecutar los seeders para llenar la base de datos con datos de prueba: `php artisan db:seed`.
+5. Iniciar el servidor de desarrollo de Laravel: `php artisan serve`.
+6. Acceder a la aplicación desde tu navegador.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Notas Finales
 
-## Laravel Sponsors
+Este proyecto ha sido desarrollado siguiendo las mejores prácticas de Laravel, asegurando la seguridad, la eficiencia y la facilidad de mantenimiento. Si tienes alguna pregunta o sugerencia, no dudes en ponerte en contacto con el equipo de desarrollo.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+¡Gracias por participar en el ejercicio Tca-Tik! 😊🚀
