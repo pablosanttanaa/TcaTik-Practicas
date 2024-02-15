@@ -12,7 +12,7 @@ class CreateProductosTable extends Migration
             $table->id();
             $table->string('nombre');
             $table->decimal('precio', 8, 2);
-            $table->text('observaciones')->nullable();
+            $table->string('observaciones', 30)->nullable();
             $table->timestamps();
         });
     }

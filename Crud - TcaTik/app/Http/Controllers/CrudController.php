@@ -22,7 +22,7 @@ class CrudController extends Controller
     {
         $request->validate([
             'txtNombre' => 'required|min:3',
-            'txtObservaciones' => 'required|min:3',
+            'txtObservaciones' => 'required|max:50',
         ]);
 
         try {
@@ -35,7 +35,10 @@ class CrudController extends Controller
 
             $nuevoProducto->almacens()->attach($request->input('txtAlmacén'));
 
-            return back()->with('Correcto', 'Producto registrado correctamente');
+            return back()->with(
+                'Correcto',
+                'Producto registrado correctamente'
+            );
         } catch (\Throwable $th) {
             return back()->with('Incorrecto', 'Error al registrar el producto');
         }
@@ -45,7 +48,7 @@ class CrudController extends Controller
     {
         $request->validate([
             'txtNombre' => 'required|min:3',
-            'txtObservaciones' => 'required|min:3',
+            'txtObservaciones' => 'required|max:30',
         ]);
 
         try {
@@ -58,9 +61,15 @@ class CrudController extends Controller
 
             $producto->almacens()->sync([$request->txtAlmacén]);
 
-            return back()->with('Correcto', 'Producto actualizado correctamente');
+            return back()->with(
+                'Correcto',
+                'Producto actualizado correctamente'
+            );
         } catch (\Throwable $th) {
-            return back()->with('Incorrecto', 'Error al actualizar el producto');
+            return back()->with(
+                'Incorrecto',
+                'Error al actualizar el producto'
+            );
         }
     }
 

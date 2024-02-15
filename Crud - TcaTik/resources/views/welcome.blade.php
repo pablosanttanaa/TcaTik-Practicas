@@ -37,21 +37,27 @@
             }
         </script>
 
-
         <div class="p-5 table-responsive">
             <div class="p-3">
-                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
-                    data-bs-target="#modalRegistrar">
-                    Añadir producto
-                </button>
+                <div class="d-flex align-items-center">
+                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#modalRegistrar">
+                        Añadir producto
+                    </button>
 
-                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    Ver
-                </button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="{{ route('ver.almacenes') }}">Ver almacenes</a>
-                    <a class="dropdown-item" href="{{ route('ver.categorias') }}">Ver categorías</a>
+                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle mx-2" data-bs-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        Ver
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{{ route('ver.almacenes') }}">Ver almacenes</a>
+                        <a class="dropdown-item" href="{{ route('ver.categorias') }}">Ver categorías</a>
+                    </div>
+
+                    <div class="input-group ms-auto" style="width: 300px;">
+                        <input type="text" class="form-control" id="inputFiltro" placeholder="Buscar...">
+                        <button class="btn btn-outline-secondary" type="button">Buscar</button>
+                    </div>
                 </div>
             </div>
             <table class="table table-striped table-bordered table-hover">
@@ -68,7 +74,7 @@
                 </thead>
                 <tbody class="table-group-divider">
                     @foreach ($datos as $item)
-                        <tr>
+                        <tr class="filaProducto">
                             <td>{{ $item->nombre }}</td>
                             <td>{{ $item->precio }}€</td>
                             <td>{{ $item->observaciones }}</td>
@@ -102,9 +108,9 @@
                                                 @csrf
                                                 <div class="mb-3">
                                                     <label for="inputName1" class="form-label">Nombre</label>
-                                                    <input type="text" class="form-control" id="inputName1"
-                                                        minlength="3" aria-describedby="emailHelp" name="txtNombre"
-                                                        required>
+                                                    <input type="text" class="form-control name-field" id="inputName1" aria-describedby="emailHelp"
+                                                        name="txtNombre" required>
+                                                    <div class="invalid-feedback">El nombre debe tener al menos 3 caracteres.</div>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="inputPrecio1" class="form-label">Precio</label>
@@ -112,10 +118,10 @@
                                                         aria-describedby="emailHelp" name="txtPrecio" required>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="inputObservaciones1"
-                                                        class="form-label">Observaciones</label>
-                                                    <input type="text" class="form-control" id="inputObservaciones1"
-                                                        aria-describedby="emailHelp" name="txtObservaciones" required>
+                                                    <label for="inputObservaciones1" class="form-label">Observaciones</label>
+                                                    <input type="text" class="form-control" id="inputObservaciones1" aria-describedby="emailHelp"
+                                                        name="txtObservaciones" required>
+                                                    <div class="invalid-feedback">La observación no puede contener más de 50 caracteres.</div>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="inputCategoría1" class="form-label">Categoría</label>
@@ -224,8 +230,56 @@
                 </tbody>
             </table>
         </div>
+        <script>
+            <!-- Uso del filtro -->
+            $(document).ready(function() {
+                $('#inputFiltro').on('keyup', function() {
+                    var filtro = $(this).val().toLowerCase();
+                    $('.filaProducto').each(function() {
+                        var texto = $(this).text().toLowerCase();
+                        if (texto.includes(filtro)) {
+                            $(this).show();
+                        } else {
+                            $(this).hide();
+                        }
+                    });
+                });
+            });
+
+            <!-- Mensaje de advertencia en observacionesLength -->
+            $(document).ready(function() {
+                $('#inputObservaciones1, #inputObservaciones2').on('input', function() {
+                    var observacionesLength = $(this).val().length;
+                    if (observacionesLength > 50) {
+                        $(this).addClass('is-invalid');
+                        $(this).removeClass('is-valid');
+                        $('#observationLengthWarning').removeClass('d-none');
+                    } else {
+                        $(this).removeClass('is-invalid');
+                        $(this).addClass('is-valid');
+                        $('#observationLengthWarning').addClass('d-none');
+                    }
+                });
+            });
+
+            <!-- Mensaje de advertencia en nombreLength -->
+            $(document).ready(function() {
+                $('.name-field').on('input', function() {
+                    var nombreLength = $(this).val().length;
+                    if (nombreLength < 3) {
+                        $(this).addClass('is-invalid');
+                        $(this).removeClass('is-valid');
+                        $('#nameLengthWarning').removeClass('d-none');
+                    } else {
+                        $(this).removeClass('is-invalid');
+                        $(this).addClass('is-valid');
+                        $('#nameLengthWarning').addClass('d-none');
+                    }
+                });
+            });
+        </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
         </script>
     </body>
-    </html>
+</html>

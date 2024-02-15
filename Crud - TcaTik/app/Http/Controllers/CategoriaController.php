@@ -37,10 +37,12 @@ class CategoriaController extends Controller
             $categoria->delete();
 
             // Redirecciona con un mensaje de éxito
-            return redirect()->route('ver.categorias')->with('success', '¡Categoría eliminada correctamente!');
+            return redirect()
+                ->route('ver.categorias')
+                ->with('success', '¡Categoría eliminada correctamente!');
         } catch (\Exception $e) {
             // Manejar cualquier error que pueda ocurrir
-            return back()->with('error', 'Error al eliminar la categoría: ' . $e->getMessage());
+            return back()->with('error', 'Error al eliminar la categoría: ');
         }
     }
 }

@@ -36,19 +36,26 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
-        <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
-            data-bs-target="#modalCrearCategoria">
-            Añadir categoría
-        </button>
 
-        <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            Ver
-        </button>
-        <div class="dropdown-menu">
-            <a class="dropdown-item" href="{{ route('crud.index') }}">Ver productos</a>
-            <a class="dropdown-item" href="{{ route('ver.almacenes') }}">Ver almacenes</a>
+        <div class="d-flex align-items-center">
+            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#modalCrearAlmacen">
+                Añadir categoria
+            </button>
+
+            <button type="button" class="btn btn-primary btn-sm dropdown-toggle mx-2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Ver
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="{{ route('crud.index') }}">Ver productos</a>
+                <a class="dropdown-item" href="{{ route('ver.almacenes') }}">Ver almacenes</a>
+            </div>
+
+            <div class="input-group ms-auto me-3" style="width: 300px;">
+                <input type="text" class="form-control" id="inputFiltro" placeholder="Buscar...">
+                <button class="btn btn-outline-secondary" type="button">Buscar</button>
+            </div>
         </div>
+
         <table class="table table-striped table-bordered table-hover">
             <caption class="caption-top text-center p-3">Categorías</caption>
             <thead class="bg-primary text-white">
@@ -60,7 +67,7 @@
             </thead>
             <tbody>
                 @foreach ($categorias as $categoria)
-                    <tr>
+                    <tr class="filaAlmacen">
                         <td>{{ $categoria->id }}</td>
                         <td>{{ $categoria->nombre }}</td>
                         <td>
@@ -107,6 +114,22 @@
             </div>
         </div>
     </div>
+    <script>
+        <!-- Uso del filtro -->
+        $(document).ready(function() {
+            $('#inputFiltro').on('keyup', function() {
+                var filtro = $(this).val().toLowerCase();
+                $('.filaAlmacen').each(function() {
+                    var texto = $(this).text().toLowerCase();
+                    if (texto.includes(filtro)) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            });
+        });
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
     </script>
