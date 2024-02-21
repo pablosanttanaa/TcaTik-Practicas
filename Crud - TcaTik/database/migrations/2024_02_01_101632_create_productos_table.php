@@ -11,8 +11,8 @@ class CreateProductosTable extends Migration
         Schema::create('productos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->decimal('precio', 8, 2);
-            $table->string('observaciones', 30)->nullable();
+            $table->decimal('precio', 8, 2); //8 dígitos 2 decimales
+            $table->string('observaciones', 50)->nullable();
             $table->timestamps();
         });
     }
@@ -22,5 +22,3 @@ class CreateProductosTable extends Migration
         Schema::dropIfExists('productos');
     }
 }
-
-

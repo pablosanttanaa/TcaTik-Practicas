@@ -56,12 +56,11 @@
 
                     <div class="input-group ms-auto" style="width: 300px;">
                         <input type="text" class="form-control" id="inputFiltro" placeholder="Buscar...">
-                        <button class="btn btn-outline-secondary" type="button">Buscar</button>
                     </div>
                 </div>
             </div>
             <table class="table table-striped table-bordered table-hover">
-                <caption class="caption-top text-center p-3">Producto</caption>
+                <caption class="caption-top text-center p-3">Productos</caption>
                 <thead class="bg-primary text-white">
                     <tr>
                         <th scope="col">Nombre</th>
@@ -120,7 +119,7 @@
                                                 <div class="mb-3">
                                                     <label for="inputObservaciones1" class="form-label">Observaciones</label>
                                                     <input type="text" class="form-control" id="inputObservaciones1" aria-describedby="emailHelp"
-                                                        name="txtObservaciones" required>
+                                                        name="txtObservaciones">
                                                     <div class="invalid-feedback">La observación no puede contener más de 50 caracteres.</div>
                                                 </div>
                                                 <div class="mb-3">
@@ -173,9 +172,10 @@
                                                     value="{{ $item->id }}">
                                                 <div class="mb-3">
                                                     <label for="inputNombre2" class="form-label">Nombre</label>
-                                                    <input type="text" class="form-control" id="inputNombre2"
+                                                    <input type="text" class="form-control name-field" id="inputNombre2"
                                                         aria-describedby="emailHelp" name="txtNombre"
                                                         value="{{ $item->nombre }}" required>
+                                                        <div class="invalid-feedback">El nombre debe tener al menos 3 caracteres.</div>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="inputPrecio2" class="form-label">Precio</label>
@@ -189,7 +189,7 @@
                                                     <input type="text" class="form-control"
                                                         id="inputObservaciones2" aria-describedby="emailHelp"
                                                         name="txtObservaciones" value="{{ $item->observaciones }}"
-                                                        required>
+                                                        >
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="inputCategoría2" class="form-label">Categorías</label>
@@ -231,18 +231,14 @@
             </table>
         </div>
         <script>
+
             <!-- Uso del filtro -->
             $(document).ready(function() {
                 $('#inputFiltro').on('keyup', function() {
                     var filtro = $(this).val().toLowerCase();
-                    $('.filaProducto').each(function() {
-                        var texto = $(this).text().toLowerCase();
-                        if (texto.includes(filtro)) {
-                            $(this).show();
-                        } else {
-                            $(this).hide();
-                        }
-                    });
+                    $('.filaProducto').hide().filter(function() {
+                        return $(this).text().toLowerCase().includes(filtro);
+                    }).show();
                 });
             });
 

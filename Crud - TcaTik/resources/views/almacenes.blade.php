@@ -9,7 +9,6 @@
     <script src="https://kit.fontawesome.com/9ca7eb5c4d.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet"> <!-- Importar archivo app.css -->
 </head>
 
 <script>
@@ -24,9 +23,16 @@
     <div class="container">
         <h1 class="text-center p-3">Listado de Almacenes</h1>
 
-        @if (session('success'))
+        @if (session('Correcto'))
         <div class="alert alert-success alert-dismissible fade show w-50 mx-auto small" role="alert">
-            {{ session('success') }}
+            {{ session('Correcto') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
+
+        @if(session('Incorrecto'))
+        <div class="alert alert-danger alert-dismissible fade show w-50 mx-auto small" role="alert">
+            {{ session('Incorrecto') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         @endif
@@ -46,7 +52,6 @@
 
             <div class="input-group ms-auto me-3" style="width: 300px;">
                 <input type="text" class="form-control" id="inputFiltro" placeholder="Buscar...">
-                <button class="btn btn-outline-secondary" type="button">Buscar</button>
             </div>
         </div>
         <table class="table table-striped table-bordered table-hover">
@@ -91,27 +96,22 @@
                             <label for="inputNombreAlmacen" class="form-label">Nombre del Almacén</label>
                             <input type="text" class="form-control" id="inputNombreAlmacen" name="txtNombreAlmacen" required>
                         </div>
-                        <button type="submit" class="btn btn-success">Crear Almacén</button>
+                        <button type="submit" class="btn btn-primary">Registrar almacén</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button> <!-- Botón "Cerrar" -->
                     </form>
                 </div>
             </div>
         </div>
     </div>
     <script>
-            <!-- Uso del filtro -->
-            $(document).ready(function() {
-                $('#inputFiltro').on('keyup', function() {
-                    var filtro = $(this).val().toLowerCase();
-                    $('.filaProducto').each(function() {
-                        var texto = $(this).text().toLowerCase();
-                        if (texto.includes(filtro)) {
-                            $(this).show();
-                        } else {
-                            $(this).hide();
-                        }
-                    });
-                });
-            });
+    $(document).ready(function() {
+        $('#inputFiltro').on('keyup', function() {
+            var filtro = $(this).val().toLowerCase();
+            $('.filaProducto').hide().filter(function() {
+                return $(this).text().toLowerCase().indexOf(filtro) !== -1;
+            }).show();
+        });
+    });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
     </script>

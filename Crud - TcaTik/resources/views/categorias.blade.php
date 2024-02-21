@@ -1,5 +1,3 @@
-<!-- resources/views/categorias.blade.php -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,33 +11,48 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 </head>
-
 <body>
+
     <script>
         var res = function() {
             var not = confirm("¿Estás seguro de querer eliminar la categoria?");
             return not;
         }
     </script>
+
     <div class="container">
         <h1 class="text-center p-3">Listado de Categorías</h1>
-        @if (session('success'))
+        @if (session('Correcto'))
             <div class="alert alert-success alert-dismissible fade show w-50 mx-auto small" role="alert">
-                {{ session('success') }}
+                {{ session('Correcto') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show w-50 mx-auto small" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
+
+        @if (session('Incorrecto'))
+            <div class="alert alert-danger alert-dismissible fade show w-50 mx-auto small" role="alert">
+                {{ session('Incorrecto') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
 
         @if (session('error'))
-            <div class="alert alert-danger alert-dismissible fade show w-50 mx-auto small" role="alert">
-                {{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
+        <div class="alert alert-danger alert-dismissible fade show w-50 mx-auto small" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 
         <div class="d-flex align-items-center">
-            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#modalCrearAlmacen">
-                Añadir categoria
+            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#modalCrearCategoria">
+                Añadir categoría
             </button>
 
             <button type="button" class="btn btn-primary btn-sm dropdown-toggle mx-2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -52,7 +65,6 @@
 
             <div class="input-group ms-auto me-3" style="width: 300px;">
                 <input type="text" class="form-control" id="inputFiltro" placeholder="Buscar...">
-                <button class="btn btn-outline-secondary" type="button">Buscar</button>
             </div>
         </div>
 
@@ -106,7 +118,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">Crear
-                                Categoría</button>
+                                categoría</button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                         </div>
                     </form>
@@ -117,18 +129,13 @@
     <script>
         <!-- Uso del filtro -->
         $(document).ready(function() {
-            $('#inputFiltro').on('keyup', function() {
-                var filtro = $(this).val().toLowerCase();
-                $('.filaAlmacen').each(function() {
-                    var texto = $(this).text().toLowerCase();
-                    if (texto.includes(filtro)) {
-                        $(this).show();
-                    } else {
-                        $(this).hide();
-                    }
-                });
-            });
+        $('#inputFiltro').on('keyup', function() {
+            var filtro = $(this).val().toLowerCase();
+            $('.filaAlmacen').hide().filter(function() {
+                return $(this).text().toLowerCase().indexOf(filtro) !== -1;
+            }).show();
         });
+    });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">

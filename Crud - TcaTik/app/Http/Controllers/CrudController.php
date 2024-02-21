@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Producto;
 use App\Models\Almacen;
 use App\Models\Categoria;
@@ -20,10 +21,15 @@ class CrudController extends Controller
 
     public function create(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'txtNombre' => 'required|min:3',
-            'txtObservaciones' => 'required|max:50',
+            'txtPrecio' => 'required',
+            'txtObservaciones' => 'nullable|max:50',
         ]);
+
+        if ($validator->fails()) {
+            return back()->with('Incorrecto', 'Error al registrar el producto');
+        }
 
         try {
             $nuevoProducto = new Producto();
@@ -46,10 +52,18 @@ class CrudController extends Controller
 
     public function update(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'txtNombre' => 'required|min:3',
-            'txtObservaciones' => 'required|max:30',
+            'txtPrecio' => 'required',
+            'txtObservaciones' => 'nullable|max:50',
         ]);
+
+        if ($validator->fails()) {
+            return back()->with(
+                'Incorrecto',
+                'Error al actualizar el producto'
+            );
+        }
 
         try {
             $producto = Producto::findOrFail($request->id_producto);

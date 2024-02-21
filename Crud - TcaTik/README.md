@@ -17,13 +17,6 @@ Para este ejercicio, se debe crear un CRUD desde cero para gestionar productos, 
 - Las relaciones entre tablas deben nombrarse productos_has_X.
 - El entorno de trabajo es Laragon y MySQL con el visualizador de HeidiSQL.
 
-## Consideraciones Adicionales
-
-- Se debe garantizar la seguridad, incluyendo validaciones en el store al guardar.
-- El código debe mantenerse limpio y organizado.
-- Es importante tener un control adecuado de errores.
-- Opcionalmente, se puede trabajar en los estilos del frontend si el tiempo lo permite.
-
 ## Instrucciones para Ejecutar el Proyecto
 
 1. Clonar este repositorio en tu entorno de desarrollo local.
@@ -32,9 +25,3 @@ Para este ejercicio, se debe crear un CRUD desde cero para gestionar productos, 
 4. Ejecutar los seeders para llenar la base de datos con datos de prueba: `php artisan db:seed`.
 5. Iniciar el servidor de desarrollo de Laravel: `php artisan serve`.
 6. Acceder a la aplicación desde tu navegador.
-
-## Notas Finales
-
-Este proyecto ha sido desarrollado siguiendo las mejores prácticas de Laravel, asegurando la seguridad, la eficiencia y la facilidad de mantenimiento. Si tienes alguna pregunta o sugerencia, no dudes en ponerte en contacto con el equipo de desarrollo.
-
-¡Gracias por participar en el ejercicio Tca-Tik! 😊🚀
