@@ -10,7 +10,7 @@ class AlmacenController extends Controller
 {
     public function showAll()
     {
-        $almacenes = Almacen::all();
+        $almacenes = Almacen::paginate(10);
         return view('almacenes', ['almacenes' => $almacenes]);
     }
 

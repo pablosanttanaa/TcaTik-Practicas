@@ -51,7 +51,7 @@
             </div>
 
             <div class="input-group ms-auto me-3" style="width: 300px;">
-                <input type="text" class="form-control" id="inputFiltro" placeholder="Buscar...">
+                <input type="text" class="form-control" id="inputFiltro" placeholder="Buscar almacén...">
             </div>
         </div>
         <table class="table table-striped table-bordered table-hover">
@@ -79,6 +79,31 @@
                 @endforeach
             </tbody>
         </table>
+        <div class="d-flex justify-content-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <!-- Enlace "Anterior" -->
+                    <li class="page-item @if($almacenes->currentPage() == 1) disabled @endif">
+                        <a class="page-link" href="{{ $almacenes->previousPageUrl() }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <!-- Números de página -->
+                    @for ($i = 1; $i <= $almacenes->lastPage(); $i++)
+                        <li class="page-item @if($i == $almacenes->currentPage()) active @endif">
+                            <a class="page-link" href="{{ $almacenes->url($i) }}">{{ $i }}</a>
+                        </li>
+                    @endfor
+                    <!-- Enlace "Siguiente" -->
+                    <li class="page-item @if($almacenes->currentPage() == $almacenes->lastPage()) disabled @endif">
+                        <a class="page-link" href="{{ $almacenes->nextPageUrl() }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
     </div>
 
     <!-- Modal para añadir almacén -->
@@ -104,14 +129,17 @@
         </div>
     </div>
     <script>
-    $(document).ready(function() {
-        $('#inputFiltro').on('keyup', function() {
-            var filtro = $(this).val().toLowerCase();
-            $('.filaProducto').hide().filter(function() {
-                return $(this).text().toLowerCase().indexOf(filtro) !== -1;
-            }).show();
+
+        <!-- Filtrar solo por el nombre del almacén --> 
+        $(document).ready(function() {
+            $('#inputFiltro').on('keyup', function() {
+                var filtro = $(this).val().toLowerCase();
+                $('.filaProducto').hide().filter(function() {
+                    return $(this).find('td:nth-child(2)').text().toLowerCase().indexOf(filtro) !== -1;
+                }).show();
+            });
         });
-    });
+
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
     </script>

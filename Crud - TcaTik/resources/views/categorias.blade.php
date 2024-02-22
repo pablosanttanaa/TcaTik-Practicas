@@ -64,7 +64,7 @@
             </div>
 
             <div class="input-group ms-auto me-3" style="width: 300px;">
-                <input type="text" class="form-control" id="inputFiltro" placeholder="Buscar...">
+                <input type="text" class="form-control" id="inputFiltro" placeholder="Buscar categoría...">
             </div>
         </div>
 
@@ -95,6 +95,30 @@
                 @endforeach
             </tbody>
         </table>
+        <div class="d-flex justify-content-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <!-- Enlace "Anterior" -->
+                    <li class="page-item @if($categorias->currentPage() == 1) disabled @endif">
+                        <a class="page-link" href="{{ $categorias->previousPageUrl() }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <!-- Números de página -->
+                    @for ($i = 1; $i <= $categorias->lastPage(); $i++)
+                        <li class="page-item @if($i == $categorias->currentPage()) active @endif">
+                            <a class="page-link" href="{{ $categorias->url($i) }}">{{ $i }}</a>
+                        </li>
+                    @endfor
+                    <!-- Enlace "Siguiente" -->
+                    <li class="page-item @if($categorias->currentPage() == $categorias->lastPage()) disabled @endif">
+                        <a class="page-link" href="{{ $categorias->nextPageUrl() }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
     <!-- Modal para crear categoría -->
     <div class="modal fade" id="modalCrearCategoria" tabindex="-1" aria-labelledby="modalCrearCategoriaLabel"
@@ -127,15 +151,16 @@
         </div>
     </div>
     <script>
-        <!-- Uso del filtro -->
+        <!-- Uso del filtro (Busca solo por nombres) -->
         $(document).ready(function() {
-        $('#inputFiltro').on('keyup', function() {
-            var filtro = $(this).val().toLowerCase();
-            $('.filaAlmacen').hide().filter(function() {
-                return $(this).text().toLowerCase().indexOf(filtro) !== -1;
-            }).show();
+            $('#inputFiltro').on('keyup', function() {
+                var filtro = $(this).val().toLowerCase();
+                $('.filaAlmacen').hide().filter(function() {
+                    // Filtrar solo por el nombre de la categoría
+                    return $(this).find('td:nth-child(2)').text().toLowerCase().indexOf(filtro) !== -1;
+                }).show();
+            });
         });
-    });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">

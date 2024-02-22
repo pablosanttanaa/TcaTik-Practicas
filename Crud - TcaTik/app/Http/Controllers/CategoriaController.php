@@ -33,7 +33,7 @@ class CategoriaController extends Controller
 
     public function showAll()
     {
-        $categorias = Categoria::all();
+        $categorias = Categoria::paginate(10); // Paginar con 10 categorías por página
         return view('categorias', ['categorias' => $categorias]);
     }
 

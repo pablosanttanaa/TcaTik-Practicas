@@ -55,6 +55,11 @@
                     </div>
 
                     <div class="input-group ms-auto" style="width: 300px;">
+                        <select id="selectFiltro" class="form-select">
+                            <option value="nombre">Nombre</option>
+                            <option value="categorias">Categorías</option>
+                            <option value="almacenes">Almacenes</option>
+                        </select>
                         <input type="text" class="form-control" id="inputFiltro" placeholder="Buscar...">
                     </div>
                 </div>
@@ -229,18 +234,56 @@
                     @endforeach
                 </tbody>
             </table>
+            <div class="d-flex justify-content-center">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item prev" title="Previous">
+                            <a class="page-link" href="{{ $datos->previousPageUrl() }}" aria-label="Previous">&laquo;</a>
+                        </li>
+                        @for ($i = 1; $i <= $datos->lastPage(); $i++)
+                            <li class="page-item @if($i == $datos->currentPage()) active @endif">
+                                <a class="page-link" href="{{ $datos->url($i) }}">{{ $i }}</a>
+                            </li>
+                        @endfor
+                        <li class="page-item next" title="Next">
+                            <a class="page-link" href="{{ $datos->nextPageUrl() }}" aria-label="Next">&raquo;</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div>
         <script>
 
-            <!-- Uso del filtro -->
-            $(document).ready(function() {
-                $('#inputFiltro').on('keyup', function() {
-                    var filtro = $(this).val().toLowerCase();
-                    $('.filaProducto').hide().filter(function() {
-                        return $(this).text().toLowerCase().includes(filtro);
-                    }).show();
-                });
+        <!-- Uso del filtro -->
+        $(document).ready(function() {
+        // Escucha cambios en el selectFiltro
+        $('#selectFiltro').on('change', function() {
+            // Limpiar el filtro al cambiar el criterio
+            $('#inputFiltro').val('');
+            // Aplicar el filtro según el criterio seleccionado
+            filtrarProductos($(this).val());
+        });
+
+        // Uso del filtro inicialmente con el criterio "nombre"
+        filtrarProductos('nombre');
+
+        // Función para aplicar el filtro según el criterio seleccionado
+        function filtrarProductos(criterio) {
+            $('#inputFiltro').on('keyup', function() {
+                var filtro = $(this).val().toLowerCase();
+                $('.filaProducto').hide().filter(function() {
+                    switch (criterio) {
+                        case 'nombre':
+                            return $(this).find('td:nth-child(1)').text().toLowerCase().includes(filtro);
+                        case 'categorias':
+                            return $(this).find('td:nth-child(4)').text().toLowerCase().includes(filtro);
+                        case 'almacenes':
+                            return $(this).find('td:nth-child(5)').text().toLowerCase().includes(filtro);
+                    }
+                }).show();
             });
+        }
+    });
 
             <!-- Mensaje de advertencia en observacionesLength -->
             $(document).ready(function() {

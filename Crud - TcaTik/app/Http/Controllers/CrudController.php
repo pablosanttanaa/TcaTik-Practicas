@@ -12,7 +12,7 @@ class CrudController extends Controller
 {
     public function index()
     {
-        $datos = Producto::all();
+        $datos = Producto::paginate(10); // Obtener productos paginados, 10 por página
         $almacenes = Almacen::all();
         $categorias = Categoria::all();
 

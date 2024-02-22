@@ -15,7 +15,21 @@ class CategoriasTableSeeder extends Seeder
             ['nombre' => 'Comida rápida'],
             ['nombre' => 'Lácteo'],
             ['nombre' => 'Verduras'],
-            ['nombre' => 'Frutas']
+            ['nombre' => 'Frutas'],
+            ['nombre' => 'Panadería'],
+            ['nombre' => 'Carnes'],
+            ['nombre' => 'Pescados'],
+            ['nombre' => 'Congelados'],
+            ['nombre' => 'Pastas'],
+            ['nombre' => 'Salsas'],
+            ['nombre' => 'Bebidas alcohólicas'],
+            ['nombre' => 'Postres'],
+            ['nombre' => 'Snacks'],
+            ['nombre' => 'Cereales'],
+            ['nombre' => 'Condimentos'],
+            ['nombre' => 'Aceites y vinagres'],
+            ['nombre' => 'Huevos'],
+            ['nombre' => 'Productos orgánicos'],
         ]);
     }
 }
