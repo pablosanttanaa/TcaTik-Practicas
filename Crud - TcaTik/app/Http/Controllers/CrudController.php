@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Redirect;
 use App\Models\Producto;
 use App\Models\Almacen;
 use App\Models\Categoria;
+use Illuminate\Pagination\Paginator;
 
 class CrudController extends Controller
 {
@@ -15,6 +17,11 @@ class CrudController extends Controller
         $datos = Producto::paginate(10); // Obtener productos paginados, 10 por página
         $almacenes = Almacen::all();
         $categorias = Categoria::all();
+
+        if ($datos->isEmpty() && $datos->currentPage() > 1) {
+            // Redirigir a la página anterior si la página actual está vacía y no es la página número 1
+            return Redirect::to($datos->previousPageUrl());
+        }
 
         return view('welcome', compact('datos', 'almacenes', 'categorias'));
     }
@@ -41,10 +48,23 @@ class CrudController extends Controller
 
             $nuevoProducto->almacens()->attach($request->input('txtAlmacén'));
 
-            return back()->with(
-                'Correcto',
-                'Producto registrado correctamente'
-            );
+            // Verificar si se debe crear una nueva página
+            $totalProductos = Producto::count();
+            $productosPorPagina = 10;
+            $totalPaginas = ceil($totalProductos / $productosPorPagina);
+
+            $currentPage = Paginator::resolveCurrentPage() ?: 1;
+
+            if ($totalPaginas > $currentPage) {
+                return Redirect::route('crud.index', [
+                    'page' => $totalPaginas,
+                ])->with('Correcto', 'Producto registrado correctamente');
+            } else {
+                return back()->with(
+                    'Correcto',
+                    'Producto registrado correctamente'
+                );
+            }
         } catch (\Throwable $th) {
             return back()->with('Incorrecto', 'Error al registrar el producto');
         }
@@ -92,6 +112,13 @@ class CrudController extends Controller
         try {
             $producto = Producto::findOrFail($id);
             $producto->delete();
+
+            $currentPage = request()->get('page', 1); // Obtener el número de la página actual
+
+            // Redirigir a la página anterior si la página actual está vacía y no es la página número 1
+            if ($currentPage > 1 && Producto::count() % 10 === 0) {
+                return Redirect::to($producto->previousPageUrl());
+            }
 
             return back()->with('Correcto', 'Producto eliminado correctamente');
         } catch (\Throwable $th) {

@@ -4,13 +4,35 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Pagination\Paginator;
 use App\Models\Almacen;
 
 class AlmacenController extends Controller
 {
-    public function showAll()
+    public function showAll(Request $request)
     {
-        $almacenes = Almacen::paginate(10);
+        // Obtener el número de elementos por página
+        $perPage = 10;
+
+        // Si se proporciona un parámetro "page" en la solicitud, usarlo como página actual,
+        // de lo contrario, establecer la página actual en 1
+        $currentPage = $request->input('page', 1);
+
+        // Establecer el número de elementos por página
+        Paginator::currentPageResolver(function () use ($currentPage) {
+            return $currentPage;
+        });
+
+        // Obtener los almacenes paginados
+        $almacenes = Almacen::paginate($perPage);
+
+        // Verificar si la página actual está vacía y no es la página número 1
+        if ($almacenes->isEmpty() && $currentPage > 1) {
+            // Redirigir a la página anterior
+            return Redirect::to($almacenes->previousPageUrl());
+        }
+
         return view('almacenes', ['almacenes' => $almacenes]);
     }
 
@@ -29,7 +51,16 @@ class AlmacenController extends Controller
             $nuevoAlmacen->nombre = $request->txtNombreAlmacen;
             $nuevoAlmacen->save();
 
-            return back()->with('Correcto', 'Almacén creado correctamente');
+            // Obtener el número total de almacenes
+            $totalAlmacenes = Almacen::count();
+
+            // Calcular el número total de páginas
+            $totalPages = ceil($totalAlmacenes / 10);
+
+            // Redirigir a la última página
+            return redirect()
+                ->route('ver.almacenes', ['page' => $totalPages])
+                ->with('Correcto', 'Almacén creado correctamente');
         } catch (\Throwable $th) {
             return back()->with('Incorrecto', 'Error al crear el almacén');
         }
@@ -43,6 +74,13 @@ class AlmacenController extends Controller
 
             // Elimina el almacén
             $almacen->delete();
+
+            $currentPage = request()->get('page', 1); // Obtener el número de la página actual
+
+            // Redirigir a la página anterior si la página actual está vacía y no es la página número 1
+            if ($almacen->isEmpty() && $currentPage > 1) {
+                return Redirect::to($almacen->previousPageUrl());
+            }
 
             return redirect()
                 ->route('ver.almacenes')

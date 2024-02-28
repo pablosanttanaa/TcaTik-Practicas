@@ -30,6 +30,7 @@ class CategoriasTableSeeder extends Seeder
             ['nombre' => 'Aceites y vinagres'],
             ['nombre' => 'Huevos'],
             ['nombre' => 'Productos orgánicos'],
+            ['nombre' => 'Prueba'],
         ]);
     }
 }
