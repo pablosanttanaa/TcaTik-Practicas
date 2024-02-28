@@ -32,9 +32,3 @@ Para este ejercicio, se debe crear un CRUD desde cero para gestionar productos, 
 4. Ejecutar los seeders para llenar la base de datos con datos de prueba: `php artisan db:seed`.
 5. Iniciar el servidor de desarrollo de Laravel: `php artisan serve`.
 6. Acceder a la aplicación desde tu navegador.
-
-## Notas Finales
-
-Este proyecto ha sido desarrollado siguiendo las mejores prácticas de Laravel, asegurando la seguridad, la eficiencia y la facilidad de mantenimiento. Si tienes alguna pregunta o sugerencia, no dudes en ponerte en contacto con el equipo de desarrollo.
-
-¡Gracias por participar en el ejercicio Tca-Tik! 😊🚀
